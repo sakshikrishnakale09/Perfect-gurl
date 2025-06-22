@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I Love You ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      background: white;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+    }
+
+    .button {
+      font-size: 28px;
+      padding: 18px 32px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: pink;
+      color: white;
+      text-shadow: 0 0 10px white;
+      box-shadow: 0 0 20px pink;
+      animation: pulse 2s infinite;
+    }
+
+    .caption {
+      font-size: 16px;
+      margin-top: 10px;
+      color: #888;
+    }
+
+    .glow-stars {
+      color: #fff;
+      font-size: 22px;
+      margin-top: 15px;
+      animation: twinkle 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.6; text-shadow: 0 0 5px gold; }
+      100% { opacity: 1; text-shadow: 0 0 10px gold; }
+    }
+
+    .heart-container {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0; left: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      clip-path: path('M512,832 C384,960 128,896 128,640 C128,448 384,320 512,512 C640,320 896,448 896,640 C896,896 640,960 512,832 Z');
+    }
+
+    .heart-container img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      margin: 5px;
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+
+    .love-text {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: deeppink;
+      text-shadow: 0 0 10px pink;
+      opacity: 0;
+      transform: rotate(-5deg);
+      animation: curveText 4s ease-in forwards;
+    }
+
+    @keyframes curveText {
+      0% { opacity: 0; letter-spacing: 20px; }
+      100% { opacity: 1; letter-spacing: 2px; }
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 24px;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); }
+      100% { transform: translateY(-10vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Initial Button -->
+<div class="centered" id="start-screen">
+  <button class="button" onclick="showNext()" id="sorryBtn">Sorry</button>
+  <div class="caption">Tap on Sorry</div>
+</div>
+
+<!-- Are you ready -->
+<div class="centered" id="ready-screen" style="display:none;">
+  <button class="button" onclick="startLove()" id="readyBtn">Are you ready?</button>
+  <div class="glow-stars">✨🌟✨</div>
+</div>
+
+<!-- ILY Text -->
+<div class="love-text" id="loveText">I love you sweetheart forever</div>
+
+<!-- Heart Image Container -->
+<div class="heart-container" id="heart">
+  <!-- Images will be inserted dynamically -->
+</div>
+
+<!-- Floating Emojis -->
+<script>
+  for(let i = 0; i < 20; i++) {
+    const emoji = document.createElement('div');
+    emoji.className = 'emoji';
+    emoji.style.left = `${Math.random()*100}vw`;
+    emoji.style.top = `${Math.random()*100}vh`;
+    emoji.innerText = '💖';
+    emoji.style.animationDuration = `${5 + Math.random()*5}s`;
+    document.body.appendChild(emoji);
+  }
+</script>
+
+<!-- Music -->
+<audio id="bgMusic" src="https://files.catbox.moe/pjmxo8.mp3" preload="auto"></audio>
+
+<!-- Firecracker Sound -->
+<audio id="fireSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b173fb39b.mp3" preload="auto"></audio>
+
+<script>
+const imageLinks = [
+  "https://i.ibb.co/ZvsszqY/74022-DD7-8-A77-499-B-AD48-B434418-A07-DF.png",
+  "https://i.ibb.co/mr8Ts3bj/IMG-3713.jpg",
+  "https://i.ibb.co/212dc58G/IMG-3682.jpg",
+  "https://i.ibb.co/JFnRgvhn/IMG-2265.jpg",
+  "https://i.ibb.co/6RxyqmsJ/IMG-2259.jpg",
+  "https://i.ibb.co/N286QdRW/IMG-1840.jpg",
+  "https://i.ibb.co/6JqB9yNG/IMG-1167.jpg",
+  "https://i.ibb.co/sp4DqPVw/061a4f7e-769b-4a75-9093-cf1f3b7dfc33.jpg",
+  "https://i.ibb.co/fYdXsGmc/3d7ad99c-f7b5-4f91-ab90-059b6d784041.jpg",
+  "https://i.ibb.co/WNkmFts1/IMG-8588.jpg",
+  "https://i.ibb.co/PG42RPLX/IMG-8587.jpg",
+  "https://i.ibb.co/Ng6mBp3Q/3-FAA830-C-C295-4319-BEAA-A0-FEB5-BF62-AC.jpg",
+  "https://i.ibb.co/JWgtvPLJ/939b3a43-cfeb-4486-a9b0-dc0daca955eb.jpg",
+  "https://i.ibb.co/qYyk5Cgd/IMG-4088.jpg",
+  "https://i.ibb.co/Kpm8Lf4x/IMG-4085.jpg",
+  "https://i.ibb.co/nNRG3vCc/IMG-2256.jpg",
+  "https://i.ibb.co/chs0BxfP/IMG-2263.jpg",
+  "https://i.ibb.co/dYgJZqF/IMG-1109.jpg",
+  "https://i.ibb.co/xq4WJQvD/3293e8ec-0ace-4f9b-a5b8-198f2957542e.jpg",
+  "https://i.ibb.co/BKjPRcdc/95648506-2903-4483-8b76-ee72e99a6cf3.jpg"
+];
+
+function showNext() {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("ready-screen").style.display = "block";
+}
+
+function startLove() {
+  document.getElementById("ready-screen").style.display = "none";
+  document.getElementById("fireSound").play();
+
+  setTimeout(() => {
+    document.getElementById("heart").style.display = "flex";
+    document.getElementById("bgMusic").play();
+    typeLoveText();
+    showImagesOneByOne();
+  }, 4000);
+}
+
+function showImagesOneByOne() {
+  const heart = document.getElementById("heart");
+  imageLinks.forEach((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    setTimeout(() => {
+      heart.appendChild(img);
+      setTimeout(() => img.style.opacity = 1, 50);
+    }, i * 400);
+  });
+}
+
+function typeLoveText() {
+  const text = "I love you sweetheart forever";
+  const el = document.getElementById("loveText");
+  el.textContent = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    el.textContent += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 150);
+}
+</script>
+
+</body>
+</html>
